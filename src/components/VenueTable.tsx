@@ -91,7 +91,7 @@ export function VenueTable() {
         <div>
           <label className="text-xs font-medium text-muted-foreground mb-1 block">Capacity ({capacityRange[0].toLocaleString()}–{capacityRange[1].toLocaleString()})</label>
           <Slider
-            min={0} max={100000} step={1000}
+            min={0} max={150000} step={1000}
             value={capacityRange}
             onValueChange={(v) => setCapacityRange(v as [number, number])}
             className="mt-2"
