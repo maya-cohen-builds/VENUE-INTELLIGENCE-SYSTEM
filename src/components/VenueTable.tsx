@@ -47,22 +47,25 @@ export function VenueTable() {
       }));
 
       const today = new Date().toISOString().slice(0, 10);
-      let updated = 0;
 
-      setVenueData((prev) =>
-        prev.map((venue) => {
+      setVenueData((prev) => {
+        let updated = 0;
+        const next = prev.map((venue) => {
           const match = apiVenues.find((av) => fuzzyMatch(venue.name, av.name));
           if (!match) return venue;
           updated++;
           const activity: Venue["activityLevel"] =
             match.upcomingTotal >= 10 ? "High" : match.upcomingTotal >= 3 ? "Medium" : "Low";
           return { ...venue, lastEnrichedDate: today, activityLevel: activity };
-        })
-      );
-
-      toast.success(
-        `Live enrichment complete. ${updated} venues updated via Ticketmaster Discovery API.`
-      );
+        });
+        // Toast inside updater so count is accurate
+        setTimeout(() => {
+          toast.success(
+            `Live enrichment complete. ${updated} venues updated via Ticketmaster Discovery API.`
+          );
+        }, 0);
+        return next;
+      });
     } catch {
       toast.error("Enrichment fetch failed. Displaying last cached data.");
     } finally {
