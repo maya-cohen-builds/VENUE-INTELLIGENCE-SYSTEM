@@ -96,7 +96,7 @@ export function VenueTable() {
   }, []);
 
   const filtered = useMemo(() => {
-    return venueData.filter((v) => {
+    const result = venueData.filter((v) => {
       if (priorityOnly) {
         if (v.exclusivityScore < 7 || v.premiumFitScore < 4) return false;
       }
@@ -109,7 +109,24 @@ export function VenueTable() {
       if (sportsOverlap === "no" && v.sportsCircuitOverlap) return false;
       return true;
     });
-  }, [venueData, exclusivityRange, capacityRange, selectedTypes, selectedActivities, selectedVendors, sportsOverlap, priorityOnly]);
+
+    if (!sortKey) return result;
+
+    return [...result].sort((a, b) => {
+      let cmp = 0;
+      const key = sortKey;
+      if (key === "activityLevel" || key === "confidenceLevel") {
+        cmp = (LEVEL_ORDER[a[key]] ?? 0) - (LEVEL_ORDER[b[key]] ?? 0);
+      } else if (key === "sportsCircuitOverlap") {
+        cmp = (a[key] ? 1 : 0) - (b[key] ? 1 : 0);
+      } else if (typeof a[key] === "number") {
+        cmp = (a[key] as number) - (b[key] as number);
+      } else {
+        cmp = String(a[key]).localeCompare(String(b[key]));
+      }
+      return sortDir === "asc" ? cmp : -cmp;
+    });
+  }, [venueData, exclusivityRange, capacityRange, selectedTypes, selectedActivities, selectedVendors, sportsOverlap, priorityOnly, sortKey, sortDir]);
 
   return (
     <div className="space-y-4">
