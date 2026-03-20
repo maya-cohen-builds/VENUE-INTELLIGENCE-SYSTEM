@@ -75,7 +75,7 @@ export function VenueTable() {
   }, []);
 
   const filtered = useMemo(() => {
-    return venues.filter((v) => {
+    return venueData.filter((v) => {
       if (priorityOnly) {
         if (v.exclusivityScore < 7 || v.premiumFitScore < 4) return false;
       }
