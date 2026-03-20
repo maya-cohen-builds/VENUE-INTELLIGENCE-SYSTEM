@@ -88,7 +88,7 @@ export function VenueTable() {
       if (sportsOverlap === "no" && v.sportsCircuitOverlap) return false;
       return true;
     });
-  }, [exclusivityRange, capacityRange, selectedTypes, selectedActivities, selectedVendors, sportsOverlap, priorityOnly]);
+  }, [venueData, exclusivityRange, capacityRange, selectedTypes, selectedActivities, selectedVendors, sportsOverlap, priorityOnly]);
 
   return (
     <div className="space-y-4">
