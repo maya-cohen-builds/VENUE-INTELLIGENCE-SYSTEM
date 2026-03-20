@@ -47,6 +47,18 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        tixr: {
+          red: "hsl(var(--tixr-red))",
+          black: "hsl(var(--tixr-black))",
+          gold: "hsl(var(--tixr-gold))",
+        },
+        nav: {
+          DEFAULT: "hsl(var(--nav-bg))",
+          foreground: "hsl(var(--nav-foreground))",
+        },
+        "table-header": "hsl(var(--table-header))",
+        "table-row-hover": "hsl(var(--table-row-hover))",
+        "table-border": "hsl(var(--table-border))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
