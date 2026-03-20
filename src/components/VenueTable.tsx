@@ -14,7 +14,7 @@ const VENDORS = ["Ticketmaster", "AXS", "Eventbrite", "Local Platform", "None", 
 
 export function VenueTable() {
   const [exclusivityRange, setExclusivityRange] = useState<[number, number]>([0, 10]);
-  const [capacityRange, setCapacityRange] = useState<[number, number]>([0, 100000]);
+  const [capacityRange, setCapacityRange] = useState<[number, number]>([0, 150000]);
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
   const [selectedActivities, setSelectedActivities] = useState<string[]>([]);
   const [selectedVendors, setSelectedVendors] = useState<string[]>([]);
