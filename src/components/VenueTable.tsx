@@ -1,5 +1,5 @@
 import { useState, useMemo, useCallback } from "react";
-import { venues, type Venue } from "@/data/venues";
+import { venues as initialVenues, type Venue } from "@/data/venues";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
@@ -7,12 +7,21 @@ import { Switch } from "@/components/ui/switch";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { MultiSelect } from "@/components/MultiSelect";
+import { Loader2 } from "lucide-react";
+
+function fuzzyMatch(a: string, b: string): boolean {
+  const normalize = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, "");
+  const na = normalize(a);
+  const nb = normalize(b);
+  return na.includes(nb) || nb.includes(na);
+}
 
 const VENUE_TYPES = ["Motorsports Circuit", "Multi-Purpose Stadium", "Aquatic Center", "Indoor Arena", "Action Sports Venue", "Entertainment Complex"];
 const ACTIVITY_LEVELS = ["High", "Medium", "Low"];
 const VENDORS = ["Ticketmaster", "AXS", "Eventbrite", "Local Platform", "None", "Multiple"];
 
 export function VenueTable() {
+  const [venueData, setVenueData] = useState<Venue[]>(() => [...initialVenues]);
   const [exclusivityRange, setExclusivityRange] = useState<[number, number]>([0, 10]);
   const [capacityRange, setCapacityRange] = useState<[number, number]>([0, 150000]);
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
@@ -22,12 +31,46 @@ export function VenueTable() {
   const [priorityOnly, setPriorityOnly] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
 
-  const handleRefresh = useCallback(() => {
+  const handleRefresh = useCallback(async () => {
     setRefreshing(true);
-    setTimeout(() => {
+    try {
+      const res = await fetch(
+        "https://app.ticketmaster.com/discovery/v2/venues.json?countryCode=SG&apikey=2JoSRJ0vdMKPHEaG9UdANtLQpQpj5jd0"
+      );
+      if (!res.ok) throw new Error("fetch failed");
+      const data = await res.json();
+      const apiVenues: { name: string; upcomingTotal: number }[] = (
+        data?._embedded?.venues ?? []
+      ).map((v: any) => ({
+        name: v.name ?? "",
+        upcomingTotal: v.upcomingEvents?._total ?? 0,
+      }));
+
+      const today = new Date().toISOString().slice(0, 10);
+
+      setVenueData((prev) => {
+        let updated = 0;
+        const next = prev.map((venue) => {
+          const match = apiVenues.find((av) => fuzzyMatch(venue.name, av.name));
+          if (!match) return venue;
+          updated++;
+          const activity: Venue["activityLevel"] =
+            match.upcomingTotal >= 10 ? "High" : match.upcomingTotal >= 3 ? "Medium" : "Low";
+          return { ...venue, lastEnrichedDate: today, activityLevel: activity };
+        });
+        // Toast inside updater so count is accurate
+        setTimeout(() => {
+          toast.success(
+            `Live enrichment complete. ${updated} venues updated via Ticketmaster Discovery API.`
+          );
+        }, 0);
+        return next;
+      });
+    } catch {
+      toast.error("Enrichment fetch failed. Displaying last cached data.");
+    } finally {
       setRefreshing(false);
-      toast.success("Enrichment signals refreshed via Ticketmaster Discovery API");
-    }, 1500);
+    }
   }, []);
 
   const handlePriorityToggle = useCallback(() => {
@@ -35,7 +78,7 @@ export function VenueTable() {
   }, []);
 
   const filtered = useMemo(() => {
-    return venues.filter((v) => {
+    return venueData.filter((v) => {
       if (priorityOnly) {
         if (v.exclusivityScore < 7 || v.premiumFitScore < 4) return false;
       }
@@ -48,7 +91,7 @@ export function VenueTable() {
       if (sportsOverlap === "no" && v.sportsCircuitOverlap) return false;
       return true;
     });
-  }, [exclusivityRange, capacityRange, selectedTypes, selectedActivities, selectedVendors, sportsOverlap, priorityOnly]);
+  }, [venueData, exclusivityRange, capacityRange, selectedTypes, selectedActivities, selectedVendors, sportsOverlap, priorityOnly]);
 
   return (
     <div className="space-y-4">
@@ -56,7 +99,7 @@ export function VenueTable() {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <h2 className="text-lg font-semibold text-foreground">Venue Database</h2>
-          <span className="text-sm text-muted-foreground">{filtered.length} of {venues.length} venues</span>
+          <span className="text-sm text-muted-foreground">{filtered.length} of {venueData.length} venues</span>
         </div>
         <div className="flex items-center gap-3">
           <Button
@@ -72,7 +115,9 @@ export function VenueTable() {
             onClick={handleRefresh}
             disabled={refreshing}
           >
-            {refreshing ? "Refreshing…" : "Refresh Enrichment"}
+            {refreshing ? (
+              <><Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" />Refreshing…</>
+            ) : "Refresh Enrichment"}
           </Button>
         </div>
       </div>
