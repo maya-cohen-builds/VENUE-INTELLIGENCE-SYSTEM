@@ -206,17 +206,34 @@ export function VenueTable() {
         <table className="w-full text-sm">
           <thead>
             <tr className="bg-table-header border-b border-table-border">
-              <th className="text-left px-3 py-2.5 font-medium text-muted-foreground">Venue Name</th>
-              <th className="text-left px-3 py-2.5 font-medium text-muted-foreground">City</th>
-              <th className="text-left px-3 py-2.5 font-medium text-muted-foreground">Type</th>
-              <th className="text-right px-3 py-2.5 font-medium text-muted-foreground">Capacity</th>
-              <th className="text-left px-3 py-2.5 font-medium text-muted-foreground">Ticketing Vendor</th>
-              <th className="text-center px-3 py-2.5 font-medium text-muted-foreground">Exclusivity</th>
-              <th className="text-center px-3 py-2.5 font-medium text-muted-foreground">Activity</th>
-              <th className="text-center px-3 py-2.5 font-medium text-muted-foreground">Premium-Fit</th>
-              <th className="text-center px-3 py-2.5 font-medium text-muted-foreground">Sports Circuit</th>
-              <th className="text-center px-3 py-2.5 font-medium text-muted-foreground">Confidence</th>
-              <th className="text-left px-3 py-2.5 font-medium text-muted-foreground">Last Enriched</th>
+              {([
+                ["name", "Venue Name", "text-left"],
+                ["city", "City", "text-left"],
+                ["venueType", "Type", "text-left"],
+                ["capacity", "Capacity", "text-right"],
+                ["currentVendor", "Ticketing Vendor", "text-left"],
+                ["exclusivityScore", "Exclusivity", "text-center"],
+                ["activityLevel", "Activity", "text-center"],
+                ["premiumFitScore", "Premium-Fit", "text-center"],
+                ["sportsCircuitOverlap", "Sports Circuit", "text-center"],
+                ["confidenceLevel", "Confidence", "text-center"],
+                ["lastEnrichedDate", "Last Enriched", "text-left"],
+              ] as [SortKey, string, string][]).map(([key, label, align]) => (
+                <th
+                  key={key}
+                  className={cn("px-3 py-2.5 font-medium text-muted-foreground cursor-pointer select-none hover:text-foreground transition-colors", align)}
+                  onClick={() => handleSort(key)}
+                >
+                  <span className="inline-flex items-center gap-1">
+                    {label}
+                    {sortKey === key ? (
+                      sortDir === "asc" ? <ArrowUp className="h-3 w-3" /> : <ArrowDown className="h-3 w-3" />
+                    ) : (
+                      <ArrowUpDown className="h-3 w-3 opacity-30" />
+                    )}
+                  </span>
+                </th>
+              ))}
             </tr>
           </thead>
           <tbody>
