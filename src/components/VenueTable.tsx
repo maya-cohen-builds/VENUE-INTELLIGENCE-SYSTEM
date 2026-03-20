@@ -112,7 +112,9 @@ export function VenueTable() {
             onClick={handleRefresh}
             disabled={refreshing}
           >
-            {refreshing ? "Refreshing…" : "Refresh Enrichment"}
+            {refreshing ? (
+              <><Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" />Refreshing…</>
+            ) : "Refresh Enrichment"}
           </Button>
         </div>
       </div>
