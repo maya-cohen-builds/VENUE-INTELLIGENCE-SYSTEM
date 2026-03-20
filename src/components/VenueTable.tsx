@@ -96,7 +96,7 @@ export function VenueTable() {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <h2 className="text-lg font-semibold text-foreground">Venue Database</h2>
-          <span className="text-sm text-muted-foreground">{filtered.length} of {venues.length} venues</span>
+          <span className="text-sm text-muted-foreground">{filtered.length} of {venueData.length} venues</span>
         </div>
         <div className="flex items-center gap-3">
           <Button
