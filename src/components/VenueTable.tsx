@@ -14,7 +14,7 @@ const VENDORS = ["Ticketmaster", "AXS", "Eventbrite", "Local Platform", "None", 
 
 export function VenueTable() {
   const [exclusivityRange, setExclusivityRange] = useState<[number, number]>([0, 10]);
-  const [capacityRange, setCapacityRange] = useState<[number, number]>([0, 100000]);
+  const [capacityRange, setCapacityRange] = useState<[number, number]>([0, 150000]);
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
   const [selectedActivities, setSelectedActivities] = useState<string[]>([]);
   const [selectedVendors, setSelectedVendors] = useState<string[]>([]);
@@ -91,7 +91,7 @@ export function VenueTable() {
         <div>
           <label className="text-xs font-medium text-muted-foreground mb-1 block">Capacity ({capacityRange[0].toLocaleString()}–{capacityRange[1].toLocaleString()})</label>
           <Slider
-            min={0} max={100000} step={1000}
+            min={0} max={150000} step={1000}
             value={capacityRange}
             onValueChange={(v) => setCapacityRange(v as [number, number])}
             className="mt-2"
