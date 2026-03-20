@@ -196,6 +196,16 @@ export function VenueTable() {
           </tbody>
         </table>
       </div>
+
+      {/* Methodology disclosure */}
+      <div className="border border-border rounded p-4 mt-2">
+        <h3 className="text-xs font-semibold text-muted-foreground mb-2">About This Dataset</h3>
+        <div className="text-[11px] leading-relaxed text-muted-foreground/80 space-y-2">
+          <p>This system uses a hybrid data model. The 20 venues in this table are manually curated and verified, prioritizing sports facilities, motorsports circuits, and aquatic centers where Live Nation exclusivity is structurally unlikely. Manual curation is applied to all Tier 1 venues because public APIs have thin coverage for motorsports circuits and national sports stadiums.</p>
+          <p>The Refresh Enrichment button makes a live call to the Ticketmaster Discovery API (5,000 free calls per day, Singapore countryCode=SG) and updates Activity Level and Last Enriched date on matched venues in real time. Venues appearing in the Ticketmaster database but not actively selling through Ticketmaster are flagged as independent or competitor clients, a reverse-exclusivity signal unique to this data source.</p>
+          <p>The enrichment pipeline is designed around the Ticketmaster Discovery API for live event cadence and Google Places for capacity and website gap-filling. Social media API signals and contract expiry prediction are excluded from this version. See the Decision Log for full methodology.</p>
+        </div>
+      </div>
     </div>
   );
 }
