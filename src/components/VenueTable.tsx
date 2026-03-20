@@ -35,6 +35,19 @@ export function VenueTable() {
   const [sportsOverlap, setSportsOverlap] = useState<"all" | "yes" | "no">("all");
   const [priorityOnly, setPriorityOnly] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
+  const [sortKey, setSortKey] = useState<SortKey | null>(null);
+  const [sortDir, setSortDir] = useState<SortDir>("asc");
+
+  const handleSort = useCallback((key: SortKey) => {
+    setSortKey((prev) => {
+      if (prev === key) {
+        setSortDir((d) => d === "asc" ? "desc" : "asc");
+        return key;
+      }
+      setSortDir("asc");
+      return key;
+    });
+  }, []);
 
   const handleRefresh = useCallback(async () => {
     setRefreshing(true);
