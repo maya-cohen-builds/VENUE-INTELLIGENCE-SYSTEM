@@ -4,37 +4,37 @@ const features = [
   {
     icon: Database,
     title: "Venue Discovery & Curation",
-    impact: "Gives reps a pre-qualified pipeline instead of cold prospecting from scratch.",
+    impact: "Gives reps a pre-qualified pipeline instead of cold prospecting — shortening the sales cycle and accelerating new client acquisition in a greenfield market worth thousands in per-venue annual ticketing revenue.",
     how: "20 venues across Singapore and Kuala Lumpur, manually curated and verified. Markets chosen strategically — Tixr has existing relationships in KL, Singapore anchors global sports (F1, MotoGP, World Surf League), and Stripe operates cleanly in both.",
   },
   {
     icon: Target,
     title: "Priority Targets Filter",
-    impact: "One-click answer to \"who do I call first?\" — filters to the highest-confidence, highest-value accounts.",
+    impact: "Focuses rep time on the 6 highest-ROI accounts — venues most likely to convert and generate the largest revenue per deal through Tixr's premium hospitality, parking, and multi-day commerce features.",
     how: "Filters venues where exclusivity score ≥ 7 and premium-fit score ≥ 4. These are accounts most likely independent of incumbent deals with the highest commercial upside for Tixr's beyond-ticketing features.",
   },
   {
     icon: Zap,
     title: "Live API Enrichment",
-    impact: "Turns a static list into a living intelligence system. Uses Ticketmaster's own data to find venues they aren't fully serving — a reverse-exclusivity signal.",
+    impact: "Creates a competitive intelligence advantage — identifying underserved venues before rivals do. Each venue won from a gap in Ticketmaster's coverage is direct market share gain and incremental recurring revenue for Tixr.",
     how: "Real-time call to the Ticketmaster Discovery API (countryCode=SG). Fuzzy-matches API results against the venue table and updates Activity Level and Last Enriched date on matched records. A venue in Ticketmaster's database but not actively selling through them signals an independent or underserved account.",
   },
   {
     icon: SlidersHorizontal,
     title: "Rep-Oriented Filters",
-    impact: "Supports different outreach strategies without requiring data analysis skills. Every filter combination produces a different call list.",
+    impact: "Increases outreach velocity and conversion rates by letting reps build targeted call lists aligned to their expertise — reducing wasted touches and driving higher client acquisition per rep per week.",
     how: "Filter by exclusivity score range, capacity, venue type, activity level, ticketing vendor, and sports circuit overlap. A motorsports-focused rep filters to circuits; a rep doing outreach this week filters out Ticketmaster entirely and works unpartnered accounts.",
   },
   {
     icon: Brain,
     title: "Transparent Scoring Model",
-    impact: "Defensible in any room — not a black box. Every score can be explained and challenged.",
+    impact: "Builds trust with prospects and internal stakeholders — a defensible, explainable model increases close rates because reps can articulate exactly why a venue was targeted, strengthening the pitch and reducing deal friction.",
     how: "Weighted rubric: ticketing vendor signal (40 pts), operator type (25 pts), venue category (20 pts), activity level (15 pts). Built as a rubric rather than ML because exclusivity contracts are private — there's no ground truth to train on. Validated against known calibration anchors before launch.",
   },
   {
     icon: FileText,
     title: "Decision Log",
-    impact: "Pre-answers every \"why didn't you do X?\" question. Documents what was excluded and why — including social media APIs, contract expiry prediction, and alternative data sources.",
+    impact: "De-risks the sales expansion strategy by documenting every methodological choice — protecting Tixr from investing in the wrong markets or data sources, and ensuring leadership alignment on go-to-market priorities.",
     how: "Covers market selection rationale, API choices (Ticketmaster over Songkick due to key availability), and honest exclusions. Every methodological decision is documented with reasoning.",
   },
 ];
