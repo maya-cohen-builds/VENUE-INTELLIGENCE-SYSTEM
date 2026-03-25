@@ -79,7 +79,11 @@ export function VenueTable() {
         // Toast inside updater so count is accurate
         setTimeout(() => {
           toast.success(
-            `Live enrichment complete. ${updated} venues updated via Ticketmaster Discovery API.`
+            `Live enrichment complete. ${updated} venues updated via Ticketmaster Discovery API.`,
+            {
+              icon: <CheckCircle2 className="h-5 w-5 text-green-500" />,
+              duration: 5000,
+            }
           );
         }, 0);
         return next;
