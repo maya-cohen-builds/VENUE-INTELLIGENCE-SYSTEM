@@ -7,7 +7,7 @@ import { Switch } from "@/components/ui/switch";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { MultiSelect } from "@/components/MultiSelect";
-import { Loader2, ArrowUp, ArrowDown, ArrowUpDown } from "lucide-react";
+import { Loader2, ArrowUp, ArrowDown, ArrowUpDown, CheckCircle2 } from "lucide-react";
 
 type SortKey = "name" | "city" | "venueType" | "capacity" | "currentVendor" | "exclusivityScore" | "activityLevel" | "premiumFitScore" | "sportsCircuitOverlap" | "confidenceLevel" | "lastEnrichedDate";
 type SortDir = "asc" | "desc";
