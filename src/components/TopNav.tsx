@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 
-type View = "venues" | "scoring" | "decisions";
+type View = "venues" | "scoring" | "decisions" | "about";
 
 interface TopNavProps {
   activeView: View;
@@ -11,6 +11,7 @@ const navItems: { key: View; label: string }[] = [
   { key: "venues", label: "Venue Table" },
   { key: "scoring", label: "Scoring Model" },
   { key: "decisions", label: "Decision Log" },
+  { key: "about", label: "About" },
 ];
 
 export function TopNav({ activeView, onViewChange }: TopNavProps) {

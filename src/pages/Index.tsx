@@ -3,8 +3,9 @@ import { TopNav } from "@/components/TopNav";
 import { VenueTable } from "@/components/VenueTable";
 import { ScoringModel } from "@/components/ScoringModel";
 import { DecisionLog } from "@/components/DecisionLog";
+import { About } from "@/components/About";
 
-type View = "venues" | "scoring" | "decisions";
+type View = "venues" | "scoring" | "decisions" | "about";
 
 const Index = () => {
   const [activeView, setActiveView] = useState<View>("venues");
@@ -16,6 +17,7 @@ const Index = () => {
         {activeView === "venues" && <VenueTable />}
         {activeView === "scoring" && <ScoringModel />}
         {activeView === "decisions" && <DecisionLog />}
+        {activeView === "about" && <About />}
       </main>
     </div>
   );
